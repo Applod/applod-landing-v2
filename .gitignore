@@ -1,8 +1,8 @@
 .DS_Store
 **/.DS_Store
 .vercel/
+# Keep Vercel project linkage local to each machine.
 HANDOFF.md
 *.log
 .python-version
 __pycache__/
-
