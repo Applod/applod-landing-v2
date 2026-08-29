@@ -1,0 +1,34 @@
+/* Applod design system — colour tokens. Imported verbatim from the
+   Claude Design project `applod-design-system-18f07473`. */
+:root {
+  --applod-white: #E1E6DE;
+  --charcoal: #292931;
+  --cream: #F5F4D1;
+  --sand: #D8CCC1;
+  --navy: #283558;
+  --indigo: #393568;
+  --pine: #0B6151;
+  --error-red: #B3261E;
+  --grey: #8D8C88;
+  --slate: #4B7694;
+  --rust: #C15513;
+
+  --ink-light: var(--applod-white);
+  --ink-dark: var(--charcoal);
+  --ground-light: var(--applod-white);
+  --ground-dark: var(--charcoal);
+
+  --surface-cream: var(--cream);
+  --surface-sand: var(--sand);
+  --surface-navy: var(--navy);
+  --surface-indigo: var(--indigo);
+  --surface-pine: var(--pine);
+
+  --text-body-on-light: var(--charcoal);
+  --text-body-on-dark: var(--applod-white);
+
+  --accent-rust: var(--rust);
+  --display-grey: var(--grey);
+  --display-slate: var(--slate);
+  --functional-error: var(--error-red);
+}

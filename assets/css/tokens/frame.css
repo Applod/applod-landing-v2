@@ -1,0 +1,6 @@
+/* Applod design system — the keyline frame device. */
+:root {
+  --frame-inset: 4%;
+  --frame-radius: 7%;
+  --frame-weight: 1.5px;
+}

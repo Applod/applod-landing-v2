@@ -1,0 +1,16 @@
+/* Applod design system — type scale. */
+:root {
+  --display-sm: 1.618rem;
+  --display-md: 2.618rem;
+  --display-lg: 4.236rem;
+
+  --ui-ratio: 1.2;
+  --ui-base: 1rem;
+  --ui-sm: calc(var(--ui-base) / var(--ui-ratio));
+  --ui-md: var(--ui-base);
+  --ui-lg: calc(var(--ui-base) * var(--ui-ratio));
+  --ui-xl: calc(var(--ui-base) * var(--ui-ratio) * var(--ui-ratio));
+
+  --tracking-caps: 0.14em;
+  --weight-body: 400;
+}

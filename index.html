@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Applod Live Production — Live Events, Production &amp; Rentals in Manila</title>
+<meta name="description" content="Applod is a Quezon City live production company bridging creative vision and technical execution: FOH and monitors, lighting, staging, rigging, equipment rental and full event production at any scale.">
+<link rel="canonical" href="https://applod.live/">
+<meta name="theme-color" content="#E1E6DE">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Applod Live Production">
+<meta property="og:title" content="Applod Live Production">
+<meta property="og:description" content="The bridge between your creative vision and technical execution. Live services, event production, equipment rental and consultations — Manila, since 2019.">
+<meta property="og:url" content="https://applod.live/">
+<meta property="og:image" content="https://applod.live/assets/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://applod.live/assets/img/og-card.jpg">
+
+<link rel="icon" type="image/png" href="assets/img/mark-icon.png">
+<link rel="apple-touch-icon" href="assets/img/mark-icon.png">
+
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' https://unpkg.com;
+  style-src 'self' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self';
+  media-src 'self';
+  connect-src 'self';
+  object-src 'none';
+  frame-src 'none';
+  base-uri 'self';
+  form-action 'self';
+">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link rel="stylesheet" href="assets/css/tokens/fonts.css">
+<link rel="stylesheet" href="assets/css/tokens/colors.css">
+<link rel="stylesheet" href="assets/css/tokens/typography.css">
+<link rel="stylesheet" href="assets/css/tokens/spacing.css">
+<link rel="stylesheet" href="assets/css/tokens/frame.css">
+<link rel="stylesheet" href="assets/css/tokens/texture.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/chrome.css?v=header-logo-1">
+<link rel="stylesheet" href="assets/css/stage.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/sections.css?v=hero-restored-1">
+<link rel="stylesheet" href="assets/css/modal.css">
+
+<!-- Backdrop renderer. Deferred so it never blocks first paint, and entirely
+     optional: venue.js degrades to flat Applod White if it fails to arrive. -->
+<script defer src="https://unpkg.com/three@0.150.1/build/three.min.js" crossorigin="anonymous"></script>
+<script type="module" src="assets/js/main.js"></script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Applod Live Inc.",
+  "alternateName": "Applod Live Production",
+  "url": "https://applod.live/",
+  "email": "business@applod.live",
+  "foundingDate": "2019",
+  "description": "Live production company bridging creative vision and technical execution — live services, event production, equipment rental and consultations.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Quezon City",
+    "addressCountry": "PH"
+  },
+  "sameAs": [
+    "https://www.instagram.com/applod.live",
+    "https://www.tiktok.com/@applod.live",
+    "https://www.youtube.com/@applodlive",
+    "https://www.facebook.com/applodliveproduction"
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#top">Skip to content</a>
+
+<!-- The schematic venue: scroll is a camera dolly, not a scrollbar. -->
+<div class="venue-layer" aria-hidden="true">
+  <applod-venue></applod-venue>
+</div>
+
+<div class="cursor-ring" data-cursor-ring aria-hidden="true"></div>
+<div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
+
+<header class="masthead">
+  <a class="wordmark" href="#top" aria-label="Applod Live Production">
+    <img class="wordmark__logo" src="assets/img/logo-header.png" width="720" height="203"
+         alt="Applod Live Production — established 2019">
+  </a>
+  <nav class="masthead__nav" aria-label="Primary">
+    <a href="#loadin">Services</a>
+    <a href="#build">Work</a>
+    <a href="#doors">Clients</a>
+    <a href="#soundcheck">About</a>
+    <a class="masthead__cta" href="#showtime">Book a Call</a>
+  </nav>
+</header>
+
+<div class="hud" data-hud aria-hidden="true">
+  <div class="hud__readout">
+    <span class="hud__index" data-hud-index>01</span>
+    <span data-hud-label>Arrival</span>
+    <span class="hud__depth" data-hud-depth>0 m</span>
+  </div>
+  <div class="hud__track">
+    <div class="hud__bar" data-hud-bar></div>
+  </div>
+</div>
+
+<main class="chapters">
+
+  <!-- 01 Arrival -->
+  <section id="top" class="chapter chapter--arrival" data-chapter data-label="Arrival" aria-labelledby="arrival-title">
+    <div class="stage stage--arrival" data-stage>
+      <div class="hero">
+        <p class="hero__meta">
+          <span>Quezon City, PH</span>
+          <span class="hero__rule" aria-hidden="true"></span>
+          <span>Estd. 2019</span>
+          <span class="hero__rule" aria-hidden="true"></span>
+          <span class="hero__accent">Doors in 6 chapters</span>
+        </p>
+        <h1 class="hero__title" id="arrival-title">
+          <img class="hero__lockup" data-hero-lockup
+               src="assets/img/wordmark.png" width="1024" height="276"
+               alt="Applod — Live Production, established 2019"
+               fetchpriority="high" decoding="async">
+        </h1>
+        <p class="hero__lede">The bridge between your creative vision and technical execution.</p>
+        <div class="btn-row">
+          <a class="btn btn--solid" href="#showtime">Book a Consultation</a>
+          <a class="btn btn--outline" href="#build">See the Work</a>
+          <button class="btn btn--ghost" type="button" data-video="assets/video/reel.mp4" data-poster="assets/img/reel-poster.jpg" data-title="Applod — Company Reel">Watch the Reel</button>
+        </div>
+        <p class="scroll-hint">
+          <span class="scroll-hint__arrow" aria-hidden="true">↓</span> Scroll to walk in
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 Load-in -->
+  <section id="loadin" class="chapter chapter--services" data-chapter data-label="Load-in" aria-labelledby="loadin-title">
+    <div class="stage" data-stage>
+      <div class="shell services">
+        <div class="section-head">
+          <h2 class="section-title" id="loadin-title">The truss goes up first.</h2>
+          <p class="services__lede">Storytelling, engineering, and logistics under one team — from brand activations to arena-scale concerts.</p>
+        </div>
+
+        <div class="hairline-grid pillars">
+          <article class="pillar" data-pillar>
+            <p class="pillar__meta"><span>01</span><span>Live</span></p>
+            <h3 class="pillar__title">Live Services</h3>
+            <ul class="pillar__list">
+              <li>FOH &amp; monitor mixing</li>
+              <li>Custom sound system setup</li>
+              <li>Lighting direction</li>
+              <li>Multi-track recording</li>
+              <li>Live streaming</li>
+              <li>Crew &amp; production team</li>
+            </ul>
+          </article>
+
+          <article class="pillar" data-pillar>
+            <p class="pillar__meta"><span>02</span><span>Produce</span></p>
+            <h3 class="pillar__title">Event Production</h3>
+            <ul class="pillar__list">
+              <li>Brand activations &amp; pop-ups</li>
+              <li>Corporate events &amp; launches</li>
+              <li>Music events &amp; festivals</li>
+              <li>Immersive installation</li>
+              <li>Custom set design &amp; fabrication</li>
+              <li>Artist, host, VO &amp; DJ bookings</li>
+            </ul>
+          </article>
+
+          <article class="pillar" data-pillar>
+            <p class="pillar__meta"><span>03</span><span>Supply</span></p>
+            <h3 class="pillar__title">Equipment Rental</h3>
+            <ul class="pillar__list">
+              <li>Sound systems</li>
+              <li>Lighting equipment</li>
+              <li>Stage, rigging &amp; trussing</li>
+              <li>Backline gear</li>
+              <li>Visuals &amp; display equipment</li>
+              <li>Cabling &amp; power distribution</li>
+            </ul>
+          </article>
+
+          <article class="pillar" data-pillar>
+            <p class="pillar__meta"><span>04</span><span>Plan</span></p>
+            <h3 class="pillar__title">Consultations</h3>
+            <ul class="pillar__list">
+              <li>Experience design</li>
+              <li>3D environment &amp; stage modeling</li>
+              <li>Immersive &amp; spatial sound design</li>
+              <li>Specs &amp; rider development</li>
+              <li>Signal flow &amp; tech routing</li>
+              <li>On-site setup &amp; integration</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 Build -->
+  <section id="build" class="chapter chapter--work" data-chapter data-label="Build" aria-labelledby="build-title">
+    <div class="stage" data-stage>
+      <div class="shell work">
+        <div class="section-head">
+          <h2 class="section-title" id="build-title">Selected work</h2>
+          <span class="caps muted">Manila · 2019 — 2026</span>
+        </div>
+
+        <div class="work__grid">
+          <figure class="work__item work__item--wide">
+            <button class="work__media video-trigger" type="button"
+                    data-video="assets/video/work-adidas.mp4"
+                    data-poster="assets/img/work-adidas-poster.jpg"
+                    data-title="Applod × Adidas Philippines — Fun Run &amp; Office Opening 2026">
+              <img class="video-trigger__poster" data-warp src="assets/img/work-adidas-poster.jpg" width="720" height="1280" alt="" loading="lazy">
+              <span class="video-trigger__play" aria-hidden="true"></span>
+              <span class="sr-only">Play video: Applod × Adidas Philippines — Fun Run &amp; Office Opening 2026</span>
+            </button>
+            <figcaption class="work__caption">
+              <span>Adidas Philippines</span><span class="muted-soft">BGC · 2026</span>
+            </figcaption>
+          </figure>
+
+          <figure class="work__item work__item--mid">
+            <button class="work__media video-trigger" type="button"
+                    data-video="assets/video/work-jamba.mp4"
+                    data-poster="assets/img/work-jamba-poster.jpg"
+                    data-title="Applod × Jamba — Cavite Branch Opening">
+              <img class="video-trigger__poster" data-warp src="assets/img/work-jamba-poster.jpg" width="720" height="1280" alt="" loading="lazy">
+              <span class="video-trigger__play" aria-hidden="true"></span>
+              <span class="sr-only">Play video: Applod × Jamba — Cavite Branch Opening</span>
+            </button>
+            <figcaption class="work__caption">
+              <span>Jamba</span><span class="muted-soft">Branch Launch</span>
+            </figcaption>
+          </figure>
+
+          <figure class="work__item work__item--tall">
+            <button class="work__media video-trigger" type="button"
+                    data-video="assets/video/work-sofa.mp4"
+                    data-poster="assets/img/work-sofa-poster.jpg"
+                    data-title="Applod × SoFA BLANC — Graduation Showcase">
+              <img class="video-trigger__poster" data-warp src="assets/img/work-sofa-poster.jpg" width="720" height="1280" alt="" loading="lazy">
+              <span class="video-trigger__play" aria-hidden="true"></span>
+              <span class="sr-only">Play video: Applod × SoFA BLANC — Graduation Showcase</span>
+            </button>
+            <figcaption class="work__caption">
+              <span>SoFA BLANC</span><span class="muted-soft">Fashion Show</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 Soundcheck -->
+  <section id="soundcheck" class="chapter chapter--about" data-chapter data-label="Soundcheck" aria-labelledby="soundcheck-title">
+    <div class="stage" data-stage>
+      <div class="shell about">
+        <div class="about__copy">
+          <p class="eyebrow">About</p>
+          <h2 class="about__title" id="soundcheck-title">Built by artists who were once onstage, backstage, and everywhere in between.</h2>
+          <p class="about__body">Applod began in 2019 as a response to fragmented, inefficient production models. It has since become a full-scale production company designed to streamline complexity and deliver technically sound experiences at any scale.</p>
+          <p class="about__body">Positioned as both creative partner and technical lead, we bring precision, agility, and artistry that raises the standard of Filipino-led productions.</p>
+        </div>
+
+        <div class="about__proof">
+          <div class="hairline-grid stats">
+            <div class="stat">
+              <span class="stat__value">95%</span>
+              <span class="stat__label">Proven client satisfaction</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">98%</span>
+              <span class="stat__label">Client loyalty</span>
+            </div>
+          </div>
+
+          <ul class="assurances">
+            <li><span class="assurances__mark" aria-hidden="true">✳</span><span>Trust of prestigious clients</span></li>
+            <li><span class="assurances__mark" aria-hidden="true">✳</span><span>Seamless event execution</span></li>
+            <li><span class="assurances__mark" aria-hidden="true">✳</span><span>Creative &amp; technical excellence</span></li>
+            <li><span class="assurances__mark" aria-hidden="true">✳</span><span>Reliability backed by experience</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 Doors -->
+  <section id="doors" class="chapter chapter--clients" data-chapter data-label="Doors" aria-labelledby="doors-title">
+    <div class="stage stage--bleed" data-stage>
+      <div class="clients">
+        <div class="clients__head section-head">
+          <h2 class="clients__title" id="doors-title">Doors open.<br>The room fills.</h2>
+          <span class="caps muted">And many more to our name</span>
+        </div>
+
+        <div class="marquee" role="region" aria-label="Artists Applod has worked with">
+          <div class="marquee__track">
+            <span class="marquee__run">
+              <span>SB19</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>Ben&amp;Ben</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>Kamikazee</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>O Side Mafia</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>Urbandub</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>KZ Tandingan</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>Regine Velasquez</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>Parokya Ni Edgar</span><span class="marquee__sep" aria-hidden="true">✳</span>
+              <span>Lola Amour</span><span class="marquee__sep" aria-hidden="true">✳</span>
+            </span>
+            <span class="marquee__run" aria-hidden="true">
+              <span>SB19</span><span class="marquee__sep">✳</span>
+              <span>Ben&amp;Ben</span><span class="marquee__sep">✳</span>
+              <span>Kamikazee</span><span class="marquee__sep">✳</span>
+              <span>O Side Mafia</span><span class="marquee__sep">✳</span>
+              <span>Urbandub</span><span class="marquee__sep">✳</span>
+              <span>KZ Tandingan</span><span class="marquee__sep">✳</span>
+              <span>Regine Velasquez</span><span class="marquee__sep">✳</span>
+              <span>Parokya Ni Edgar</span><span class="marquee__sep">✳</span>
+              <span>Lola Amour</span><span class="marquee__sep">✳</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="clients__groups">
+          <div class="client-group">
+            <h3 class="eyebrow eyebrow--micro">Corporations</h3>
+            <div class="chip-set">
+              <span class="chip">JPMorgan Chase</span>
+              <span class="chip">Ayala</span>
+              <span class="chip">San Miguel</span>
+              <span class="chip">Meralco</span>
+              <span class="chip">Globe</span>
+              <span class="chip">SM</span>
+              <span class="chip">Filinvest</span>
+              <span class="chip">Union Bank</span>
+            </div>
+          </div>
+
+          <div class="client-group">
+            <h3 class="eyebrow eyebrow--micro">Brands &amp; Organizations</h3>
+            <div class="chip-set">
+              <span class="chip">adidas</span>
+              <span class="chip">Boiler Room</span>
+              <span class="chip">Jamba</span>
+              <span class="chip">Pancake House</span>
+              <span class="chip">Birch Tree</span>
+              <span class="chip">ANZCHAM</span>
+              <span class="chip">Manila &amp;Friends</span>
+            </div>
+          </div>
+
+          <div class="client-group">
+            <h3 class="eyebrow eyebrow--micro">Institutions</h3>
+            <div class="chip-set">
+              <span class="chip">UP</span>
+              <span class="chip">Ateneo</span>
+              <span class="chip">DLSU</span>
+              <span class="chip">UST</span>
+              <span class="chip">FEU</span>
+              <span class="chip">SoFA</span>
+              <span class="chip">Miriam College</span>
+            </div>
+          </div>
+
+          <div class="client-group">
+            <h3 class="eyebrow eyebrow--micro">Venues</h3>
+            <div class="chip-set">
+              <span class="chip">MOA Arena</span>
+              <span class="chip">Araneta Coliseum</span>
+              <span class="chip">SMX</span>
+              <span class="chip">PICC</span>
+              <span class="chip">Solaire</span>
+              <span class="chip">Okada Manila</span>
+              <span class="chip">City of Dreams</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Showtime -->
+  <section id="showtime" class="chapter chapter--contact" data-chapter data-label="Showtime" aria-labelledby="showtime-title">
+    <div class="stage stage--contact" data-stage>
+      <div class="shell contact">
+        <div class="contact__head">
+          <p class="eyebrow">Showtime</p>
+          <h2 class="contact__title" id="showtime-title">Let's turn that vision into reality.</h2>
+          <div class="btn-row">
+            <a class="btn btn--solid btn--lg" href="mailto:business@applod.live?subject=Consultation%20request">Book a Consultation</a>
+            <a class="btn btn--outline btn--lg" href="mailto:business@applod.live">business@applod.live</a>
+          </div>
+        </div>
+
+        <div class="hairline-grid team">
+          <div class="team__member">
+            <span class="team__name">Kenneth Amores</span>
+            <span class="team__role">Chief Executive Officer</span>
+            <a class="team__tel" href="tel:+639561454465">+63 956 145 4465</a>
+          </div>
+          <div class="team__member">
+            <span class="team__name">Joe Agudelo</span>
+            <span class="team__role">Chief Operating Officer</span>
+            <a class="team__tel" href="tel:+639778316744">+63 977 831 6744</a>
+          </div>
+          <div class="team__member">
+            <span class="team__name">Gio C. Nogales</span>
+            <span class="team__role">Chief Marketing Officer</span>
+            <a class="team__tel" href="tel:+639164033717">+63 916 403 3717</a>
+          </div>
+          <div class="team__member">
+            <span class="team__name">Christian Soncuya</span>
+            <span class="team__role">Senior Account Manager</span>
+            <a class="team__tel" href="tel:+639162435650">+63 916 243 5650</a>
+          </div>
+        </div>
+
+        <footer class="colophon">
+          <span>Applod Live Inc. · Quezon City, Philippines</span>
+          <span class="colophon__social">
+            <a href="https://www.instagram.com/applod.live" rel="noopener">Instagram</a>
+            <a href="https://www.tiktok.com/@applod.live" rel="noopener">TikTok</a>
+            <a href="https://www.youtube.com/@applodlive" rel="noopener">YouTube</a>
+            <a href="https://www.facebook.com/applodliveproduction" rel="noopener">Facebook</a>
+          </span>
+        </footer>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Displacement filters for js/warp.js are generated into this defs block,
+     one per warp target. Kept out of the flow and hidden from AT. -->
+<svg class="warp-defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs data-warp-defs></defs>
+</svg>
+
+<dialog class="video-modal" data-video-modal aria-label="Video player">
+  <div class="video-modal__frame">
+    <button class="video-modal__close" type="button" data-video-modal-close aria-label="Close video">
+      <span aria-hidden="true">×</span>
+    </button>
+    <video class="video-modal__video" data-video-modal-player playsinline controls></video>
+  </div>
+  <p class="video-modal__caption" data-video-modal-caption></p>
+</dialog>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+/* ---------------------------------------------------------------------------
+   modal.css — the shared video screening dialog.
+
+   One <dialog> in the DOM, reused for the hero reel and all three work-grid
+   case studies; js/video-modal.js swaps its src/poster/caption per trigger.
+   -------------------------------------------------------------------------- */
+
+.video-modal {
+  padding: 0;
+  border: none;
+  max-width: min(920px, 92vw);
+  max-height: 88vh;
+  background: transparent;
+  color: var(--ground);
+  overscroll-behavior: contain;
+}
+
+.video-modal::backdrop {
+  background: rgba(var(--ink-rgb), 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* The dialog element itself is the flex container so the caption can sit
+   under a frame that's sized to the video's own intrinsic aspect ratio. */
+.video-modal[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.video-modal__frame {
+  position: relative;
+  border: 1.5px solid var(--ground);
+  border-radius: 4px;
+  background: var(--ink);
+  overflow: hidden;
+  line-height: 0;
+}
+
+.video-modal__video {
+  display: block;
+  max-width: min(920px, 92vw);
+  max-height: 76vh;
+}
+
+.video-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--ground);
+  border-radius: 50%;
+  background: rgba(var(--ink-rgb), 0.7);
+  color: var(--ground);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.video-modal__close:hover {
+  background: var(--ground);
+  color: var(--ink);
+  border-color: var(--ground);
+}
+
+.video-modal__caption {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+  .video-modal { max-width: 96vw; }
+  .video-modal__video { max-width: 96vw; max-height: 68vh; }
+}

@@ -1,0 +1,80 @@
+/* ---------------------------------------------------------------------------
+   stage.css — the chapter scaffolding.
+
+   Each chapter is a tall scroll track; its stage sticks to the top for the
+   length of that track. js/depth.js reads the track position and pushes the
+   stage through depth: it approaches from behind, holds, then passes through
+   the viewer. Nothing here animates on its own — the script owns transform,
+   opacity and filter.
+   --------------------------------------------------------------------------- */
+
+.chapters {
+  position: relative;
+  z-index: var(--z-stage);
+}
+
+.chapter {
+  /* min-height, not height: if a stage ever outgrows its track (long copy,
+     bumped font size, short viewport) the track grows with it instead of
+     clipping the overflow out of reach. */
+  min-height: var(--track, 210vh);
+}
+
+.chapter--arrival { --track: 170vh; }
+.chapter--services { --track: 210vh; }
+.chapter--work { --track: 210vh; }
+.chapter--about { --track: 210vh; }
+.chapter--clients { --track: 220vh; }
+.chapter--contact { --track: 240vh; }
+
+.stage {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: var(--header-h) var(--gutter) var(--space-8);
+}
+
+/* The clients marquee is full-bleed, so that stage keeps its own gutters. */
+.stage--bleed { padding-inline: 0; }
+
+.stage--arrival { padding-bottom: 120px; }
+.stage--contact { padding: 90px var(--gutter) 30px; }
+
+.shell {
+  width: min(var(--shell-max), 100%);
+}
+
+/* --- Flat mode -------------------------------------------------------------
+   Below the depth breakpoint the conceit is dropped entirely: chapters become
+   ordinary stacked sections. js/depth.js watches the same query and stops
+   writing transforms, so nothing is left mid-animation.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 820px) {
+  .chapter { min-height: 0; }
+
+  .stage {
+    position: static;
+    min-height: 0;
+    padding: var(--space-8) 18px;
+    /* Undo whatever the depth script wrote before the query flipped. */
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .stage--arrival {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding-top: 120px;
+    padding-bottom: var(--space-8);
+  }
+  .stage--contact { padding-bottom: var(--space-6); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage { filter: none !important; }
+}

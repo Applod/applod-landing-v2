@@ -1,0 +1,7 @@
+/* Applod design system — type families. */
+@import url('https://fonts.googleapis.com/css2?family=Metrophobic&display=swap');
+
+:root {
+  --font-body: 'Metrophobic', 'Helvetica Neue', Arial, sans-serif;
+  --font-wordmark: 'Metrophobic', 'Helvetica Neue', Arial, sans-serif;
+}

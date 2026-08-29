@@ -1,0 +1,359 @@
+/* ---------------------------------------------------------------------------
+   sections.css — per-chapter layout.
+   --------------------------------------------------------------------------- */
+
+/* --- Shared section head ---------------------------------------------------- */
+
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.section-title {
+  font-size: clamp(30px, 4.4vw, 58px);
+  line-height: 1.04;
+}
+
+/* --- 01 Arrival -------------------------------------------------------------- */
+
+.hero {
+  display: grid;
+  justify-items: center;
+  gap: 26px;
+  text-align: center;
+}
+
+.hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.hero__rule {
+  width: 30px;
+  height: 1px;
+  background: var(--ink);
+  opacity: 0.4;
+}
+
+.hero__accent { color: var(--accent); }
+
+/* The full horizontal Applod lockup from Artboard 7 as artwork, not type. */
+.hero__title {
+  position: relative;
+  width: min(760px, 84vw);
+  line-height: 0;
+}
+
+/* Always present and visible by default — js/hero-particles.js layers a
+   canvas over it and only hides it once particle assembly is actually ready
+   to run, so a script failure never hides the logo. */
+.hero__lockup {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero__lockup-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.hero__lede {
+  max-width: 30ch;
+  font-size: clamp(17px, 1.5vw, 22px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.hero .btn-row {
+  justify-content: center;
+  padding-top: 4px;
+}
+
+/* --- 02 Load-in -------------------------------------------------------------- */
+
+.services { display: grid; gap: 34px; }
+
+.services__lede {
+  max-width: 42ch;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.82;
+  text-wrap: pretty;
+}
+
+.pillars { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+.pillar {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: 24px 22px 28px;
+  background: var(--panel);
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+.pillar:hover,
+.pillar:focus-within {
+  background: var(--ink);
+  color: var(--ground);
+}
+
+.pillar__meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.pillar__title { font-size: 22px; }
+
+.pillar__list {
+  display: grid;
+  gap: 7px;
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+/* --- 03 Build ---------------------------------------------------------------- */
+
+.work { display: grid; gap: 26px; }
+
+.work__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.work__item { display: grid; gap: 10px; }
+
+.work__item--wide { grid-column: span 5; }
+.work__item--mid { grid-column: span 4; }
+.work__item--tall { grid-column: span 3; }
+
+.work__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.work__item--tall .work__media { aspect-ratio: 3 / 4; }
+
+.work__caption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 820px) {
+  .work__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .work__item--wide { grid-column: span 2; }
+  .work__item--mid,
+  .work__item--tall { grid-column: span 1; }
+  .work__item--tall .work__media { aspect-ratio: 4 / 3; }
+}
+
+/* --- 04 Soundcheck ----------------------------------------------------------- */
+
+.about {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 48px;
+  align-items: center;
+}
+
+.about__copy { display: grid; gap: 20px; }
+
+.about__title {
+  font-size: clamp(26px, 3.2vw, 42px);
+  line-height: 1.12;
+}
+
+.about__body {
+  font-size: 16px;
+  line-height: 1.62;
+  opacity: 0.85;
+  text-wrap: pretty;
+}
+
+.about__proof { display: grid; gap: 18px; }
+
+.stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.stat {
+  display: grid;
+  gap: 6px;
+  padding: 24px 22px;
+}
+
+.stat__value {
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 1;
+  color: var(--accent);
+}
+
+.stat__label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.assurances {
+  display: grid;
+  border: 1px solid var(--rule);
+  background: var(--panel-solid);
+}
+
+.assurances li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 15px 20px;
+  font-size: 15px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.assurances li:last-child { border-bottom: 0; }
+
+.assurances__mark { color: var(--accent); }
+
+/* --- 05 Doors ----------------------------------------------------------------- */
+
+.clients { display: grid; gap: 34px; }
+
+.clients__head,
+.clients__groups {
+  width: min(var(--shell-max), 100%);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.clients__title {
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1.05;
+}
+
+.clients__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.client-group {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+@media (max-width: 820px) {
+  .clients__head,
+  .clients__groups { padding-inline: 18px; }
+}
+
+/* --- 06 Showtime --------------------------------------------------------------- */
+
+.contact {
+  display: grid;
+  gap: 40px;
+  justify-items: center;
+}
+
+.contact__head {
+  display: grid;
+  gap: 22px;
+  justify-items: center;
+  text-align: center;
+}
+
+.contact__title {
+  font-size: clamp(34px, 6vw, 84px);
+  line-height: 1;
+  max-width: 16ch;
+}
+
+/* The palette-colour crowd sits behind the last two chapters. This tiny
+   ground-colour halo protects the letterforms without putting the text in a
+   heavy panel or dialing the crowd's colour back. It follows --ground, so it
+   automatically flips from the pale hall to the dark room with the venue. */
+.chapter--clients .clients__title,
+.chapter--contact .contact__title,
+.chapter--clients .clients__head .caps {
+  text-shadow:
+    0 1px 0 var(--ground),
+    0 0 10px color-mix(in srgb, var(--ground) 92%, transparent),
+    0 0 24px color-mix(in srgb, var(--ground) 72%, transparent);
+}
+
+.contact .btn-row { justify-content: center; }
+
+.team {
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.team__member {
+  display: grid;
+  gap: 5px;
+  padding: 20px;
+}
+
+.team__name { font-size: 16px; }
+
+.team__role {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.team__tel {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+.team__tel:hover { color: inherit; opacity: 0.6; }
+
+.colophon {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-size: 11px;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.colophon__social {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
