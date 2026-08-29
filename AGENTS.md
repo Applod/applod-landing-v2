@@ -53,11 +53,10 @@ Embedded or background browser previews may report a zero-sized canvas or pause 
 
 ## Deployment
 
-The site is deployed as a static Vercel project with no build command and the project root as its output. The public GitHub repository is `joeagudelo-ship-it/applod-landing-v2`.
+The site is deployed as a static Vercel project with no build command and the project root as its output. The public GitHub repository is `Applod/applod-landing-v2`.
 
 - Pushes to `main` create production deployments.
 - Other branches and pull requests create preview deployments.
 - `.vercel/` contains machine-specific project linkage and must never be committed.
 - Do not add `applod.live` until the current Vercel deployment has visual approval.
 - Before pushing, check for missing assets, JavaScript syntax errors, accidental credentials, and machine-specific files.
-
