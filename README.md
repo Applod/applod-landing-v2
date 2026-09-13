@@ -65,6 +65,7 @@ assets/
     venue-splatter.js   logo-sampled scene cloud: form, disperse, reform, pointer response
     anchor-bus.js       screen-space bridge from the WebGL mark to accessible DOM
     work-bubbles.js     manifest-driven work links pinned to particle anchors
+    device-tilt.js      phone gyro mapping and iOS motion-permission control
     hero-particles.js  the hero lockup's one-shot split-particle assembly
     hover-burst.js     the shared pointer-burst canvas layer
     warp.js             turbulence-displacement hover warp
@@ -130,6 +131,9 @@ graphic against both the pale hall and dark auditorium.
 Fine-pointer hover adds local distortion to work imagery through SVG turbulence
 and displacement, plus small pointer bursts on interactive elements. Reduced-
 motion and coarse-pointer visitors receive stable, fully usable alternatives.
+On compatible phones, tilting the device steers the same camera angle and light
+parallax as desktop pointer movement. Android enables the sensor directly;
+iOS exposes an explicit permission control because Safari requires a user tap.
 
 ## Video
 

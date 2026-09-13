@@ -26,6 +26,7 @@ Then open `http://127.0.0.1:4832/`. Do not open `index.html` as a `file://` URL:
 - `assets/js/venue-splatter.js` samples the real Applod starburst and drives the large scene particle cloud.
 - `assets/js/anchor-bus.js` carries projected splatter positions from WebGL to the DOM.
 - `assets/js/work-bubbles.js` builds accessible Selected Work links from `assets/data/work.json` and pins them to those positions.
+- `assets/js/device-tilt.js` maps phone orientation to the desktop camera-input range and owns iOS motion permission UI.
 - `assets/js/hero-particles.js` handles the hero lockup's one-shot particle assembly.
 - `assets/js/warp.js` applies the fine-pointer hover distortion to work imagery.
 - `assets/js/video-modal.js` owns the shared reel/work video dialog.
@@ -47,6 +48,7 @@ Keep the videos in ordinary Git storage. The largest is below GitHub's 100 MB pe
 - Honor `prefers-reduced-motion`. The venue renders a stable frame, depth transforms flatten, looping decoration stops, the logo resolves immediately, and Selected Work uses the complete video grid instead of projected bubbles.
 - At widths up to 820px, chapter stages become normal stacked content and scroll depth transforms are disabled.
 - Hover warp and cursor effects are for fine pointers only.
+- On compatible phones, device orientation steers scene depth and lighting. iOS must request permission from the visible tilt control; never request it automatically or make the site depend on approval.
 - If three.js or WebGL fails, content must remain usable against the CSS background.
 - Never make critical navigation or video access depend on WebGL, pointer hover, or animation completion.
 

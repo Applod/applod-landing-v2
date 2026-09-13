@@ -125,6 +125,38 @@ applod-venue {
   .hud__track { width: 140px; }
 }
 
+/* --- Phone tilt permission -------------------------------------------------
+   Android usually needs no prompt. iOS reveals this control because motion
+   permission must be requested from a deliberate tap. JavaScript keeps it
+   hidden everywhere else, including reduced-motion and fine-pointer devices.
+   -------------------------------------------------------------------------- */
+
+.tilt-control {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: var(--z-header);
+  min-height: 44px;
+  padding: 10px 13px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--panel-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.tilt-control:disabled { opacity: 0.65; }
+.tilt-control[hidden] { display: none; }
+
+@media (min-width: 821px), (prefers-reduced-motion: reduce) {
+  .tilt-control { display: none; }
+}
+
 /* --- Custom cursor ---------------------------------------------------------
    Hidden by default. js/cursor.js sets `.has-cursor` on <html> only when the
    pointer is fine, the viewport is wide, and motion is not reduced.

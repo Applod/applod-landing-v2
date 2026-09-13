@@ -16,6 +16,7 @@ import { initHoverBurst } from './hover-burst.js';
 import { initVideoModal } from './video-modal.js';
 import { initWarp } from './warp.js';
 import { initWorkBubbles } from './work-bubbles.js';
+import { initDeviceTilt } from './device-tilt.js';
 
 import './venue.js';
 
@@ -44,6 +45,7 @@ function start() {
   boot('theme', applyTheme);
 
   const cursor = boot('cursor', () => initCursor({ enabled: CONFIG.customCursor }));
+  const tilt = boot('device-tilt', initDeviceTilt);
   boot('depth', () => initDepth({ showMeter: CONFIG.showDepthMeter }));
   boot('hero-particles', initHeroParticles);
   boot('hover-burst', initHoverBurst);
@@ -51,7 +53,12 @@ function start() {
   boot('warp', initWarp);
   boot('work-bubbles', initWorkBubbles);
 
-  if (cursor) watchMotionPreferences(() => cursor.refresh());
+  if (cursor || tilt) {
+    watchMotionPreferences(() => {
+      cursor?.refresh();
+      tilt?.refresh();
+    });
+  }
 }
 
 if (document.readyState === 'loading') {

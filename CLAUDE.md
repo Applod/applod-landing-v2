@@ -20,6 +20,6 @@ This is the production Applod Live landing page. Read `AGENTS.md` completely bef
 
 ## Design constraints
 
-Preserve the approved chronological stage process, dark “house lights down” color transition, Artboard 7 hero lockup, Artboard 9 masthead logo, real-logo particle splatter, particle-anchored Selected Work bubbles, fine-pointer hover warp, mobile flat layout, and reduced-motion fallbacks. Critical content and navigation must never depend on WebGL or animation completion.
+Preserve the approved chronological stage process, dark “house lights down” color transition, Artboard 7 hero lockup, Artboard 9 masthead logo, real-logo particle splatter, particle-anchored Selected Work bubbles, fine-pointer hover warp, optional phone-tilt depth, mobile flat layout, and reduced-motion fallbacks. Critical content and navigation must never depend on WebGL, sensor permission, or animation completion.
 
 Meaningful changes should be verified locally and on a Vercel preview before they reach production. Pushes to `main` deploy automatically; do not attach `applod.live` without Joe's approval.

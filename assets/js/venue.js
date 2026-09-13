@@ -15,6 +15,7 @@ import { CONFIG, VENUE_INTENSITY } from './config.js';
 import { buildVenue } from './venue-scene.js';
 import { isDarkAt } from './venue-palette.js';
 import { prefersReducedMotion, runFrameLoop } from './motion.js';
+import { deviceTilt } from './device-tilt.js';
 
 const CLEAR_COLOR = 0xe1e6de;
 const MAX_PIXEL_RATIO = 1.75;
@@ -142,6 +143,7 @@ class ApplodVenue extends HTMLElement {
     let easedProgress = 0;
 
     const onPointerMove = (event) => {
+      if (event.pointerType && event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
       pointer.x = event.clientX / innerWidth - 0.5;
       pointer.y = event.clientY / innerHeight - 0.5;
       pointer.active = true;
@@ -164,8 +166,12 @@ class ApplodVenue extends HTMLElement {
 
     const draw = () => {
       easedProgress += (progress - easedProgress) * SCROLL_EASE;
-      easedPointer.x += (pointer.x - easedPointer.x) * POINTER_EASE;
-      easedPointer.y += (pointer.y - easedPointer.y) * POINTER_EASE;
+      const inputX = deviceTilt.active ? deviceTilt.x : pointer.x;
+      const inputY = deviceTilt.active ? deviceTilt.y : pointer.y;
+      easedPointer.x += (inputX - easedPointer.x) * POINTER_EASE;
+      easedPointer.y += (inputY - easedPointer.y) * POINTER_EASE;
+      // Gyro controls depth and lighting, not the cursor-repulsion shader.
+      // That shader still receives only a real mouse/pen position.
       easedPointer.rawX = pointer.x;
       easedPointer.rawY = pointer.y;
       easedPointer.active = pointer.active;
