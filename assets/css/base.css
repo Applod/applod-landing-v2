@@ -32,6 +32,7 @@
   /* Stacking order, named once so nothing has to guess. */
   --z-venue: 0;
   --z-stage: 10;
+  --z-bubbles: 35;
   --z-header: 40;
   --z-hud: 45;
   --z-burst: 46;
@@ -71,6 +72,7 @@ html.is-dark {
    (The hero lockup only shares the viewport with the light ground in practice,
    but it inverts too so a deep link or a short page can't catch it out.) */
 html.is-dark .wordmark__mark,
+html.is-dark .wordmark__logo,
 html.is-dark .hero__lockup {
   filter: invert(1) brightness(1.08);
 }

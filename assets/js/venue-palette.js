@@ -30,12 +30,15 @@ import { clamp01 } from './math.js';
  */
 export const PHASES = Object.freeze([
   { at: 0.00, ground: 0xe1e6de, ink: 0x292931, label: 'arrival' },
-  { at: 0.25, ground: 0xd2d8d0, ink: 0x283558, label: 'load-in' },
+  { at: 0.22, ground: 0xd2d8d0, ink: 0x283558, label: 'load-in' },
   { at: 0.45, ground: 0xc3cbc4, ink: 0x393568, label: 'build' },
-  { at: 0.62, ground: 0x4a534e, ink: 0x8d8c88, label: 'crossing' },
-  { at: 0.72, ground: 0x181d1f, ink: 0xe1e6de, label: 'doors' },
-  { at: 0.88, ground: 0x121618, ink: 0xe1e6de, label: 'showtime' },
-  { at: 1.00, ground: 0xe1e6de, ink: 0x292931, label: 'egress' },
+  { at: 0.52, ground: 0xb7bfb8, ink: 0x393568, label: 'dimming' },
+  { at: 0.59, ground: 0x2a3134, ink: 0xe1e6de, label: 'crossing' },
+  { at: 0.66, ground: 0x181d1f, ink: 0xe1e6de, label: 'doors' },
+  { at: 0.90, ground: 0x121618, ink: 0xe1e6de, label: 'showtime' },
+  { at: 0.945, ground: 0x121618, ink: 0xe1e6de, label: 'last-look' },
+  { at: 0.985, ground: 0xe1e6de, ink: 0x292931, label: 'egress' },
+  { at: 1.00, ground: 0xe1e6de, ink: 0x292931, label: 'out' },
 ]);
 
 /**
@@ -47,13 +50,20 @@ export const PHASES = Object.freeze([
  * ground for the last tenth of the page.
  *
  * Both edges carry hysteresis so a scroll jitter sitting exactly on a boundary
- * can't strobe the whole page. The trailing pair straddles p ~= 0.94, which is
+ * can't strobe the whole page.
+ *
+ * These sit at the *midpoint of the ground's own fall*, not at a chapter
+ * boundary. Measured: charcoal body copy needs a ground above ~0.28 relative
+ * luminance to clear AA, Applod White needs one below ~0.13. Between those
+ * lies a band where neither works — so the ramp is built to cross it fast and
+ * the chrome flips in the middle of that crossing. Moving these without
+ * re-measuring the ramp will put text back in the dead zone. The trailing pair straddles p ~= 0.94, which is
  * where the scene ground actually crosses back through mid-luminance.
  */
-const DARK_ON = 0.62;
-const DARK_OFF = 0.56;
-const LIGHT_AGAIN = 0.93;
-const DARK_AGAIN = 0.90;
+const DARK_ON = 0.56;
+const DARK_OFF = 0.53;
+const LIGHT_AGAIN = 0.968;
+const DARK_AGAIN = 0.950;
 
 /**
  * @param {number} p scroll progress, 0..1

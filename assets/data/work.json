@@ -1,0 +1,41 @@
+{
+  "_comment": "Selected Work bubbles. Adding an item here adds a bubble — no code change. `href` is the Instagram permalink the bubble opens; `caption` is the post's own caption text, used for the hover label and the accessible name. Thumbnails must be local files (the page's CSS policy blocks off-site images, and Instagram doesn't allow reliable hotlinking).",
+  "items": [
+    {
+      "id": "reel",
+      "type": "video",
+      "title": "Company Reel",
+      "event": "Applod",
+      "caption": "Front of house, monitors, rigging and lighting across a year of Manila shows.",
+      "poster": "assets/img/reel-poster.jpg",
+      "href": "https://www.instagram.com/applod.live/"
+    },
+    {
+      "id": "adidas",
+      "type": "video",
+      "title": "Adidas Philippines",
+      "event": "Fun Run & Office Opening 2026 · BGC",
+      "caption": "Stage, sound and show calling for the Adidas Philippines fun run and office opening.",
+      "poster": "assets/img/work-adidas-poster.jpg",
+      "href": "https://www.instagram.com/applod.live/"
+    },
+    {
+      "id": "jamba",
+      "type": "video",
+      "title": "Jamba",
+      "event": "Cavite Branch Opening",
+      "caption": "Brand activation build and AV for the Jamba Cavite branch launch.",
+      "poster": "assets/img/work-jamba-poster.jpg",
+      "href": "https://www.instagram.com/applod.live/"
+    },
+    {
+      "id": "sofa",
+      "type": "video",
+      "title": "SoFA BLANC",
+      "event": "Graduation Showcase",
+      "caption": "Lighting direction and live production for the SoFA Design Institute BLANC showcase.",
+      "poster": "assets/img/work-sofa-poster.jpg",
+      "href": "https://www.instagram.com/applod.live/"
+    }
+  ]
+}

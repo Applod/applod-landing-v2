@@ -9,7 +9,7 @@ Static site — no build step, no dependencies to install. Open `index.html`
 through any web server.
 
 ```bash
-python3 -m http.server 4832 --directory "$(pwd)"
+python3 scripts/dev-server.py 4832
 ```
 
 ## What this is
@@ -33,7 +33,7 @@ Each chapter's stage rushes toward the viewer and passes through.
 |---|---------|----------|---------|
 | 01 | Arrival | `#top` | Hero, logo mark, "Watch the Reel" |
 | 02 | Load-in | `#loadin` | The four service pillars |
-| 03 | Build | `#build` | Three real client case-study videos |
+| 03 | Build | `#build` | Four projects revealed as bubbles within the particle mark |
 | 04 | Soundcheck | `#soundcheck` | About, stats, assurances |
 | 05 | Doors | `#doors` | Artist marquee and client roster |
 | 06 | Showtime | `#showtime` | Contact, team, colophon |
@@ -46,6 +46,7 @@ assets/
   css/
     tokens/          design-system tokens, imported verbatim from the project
     base.css         reset, semantic aliases, focus, motion preferences
+    bubbles.css      projected Selected Work bubbles and touch/focus states
     chrome.css       venue layer, masthead, depth HUD, custom cursor, hover-burst layer
     stage.css        chapter tracks and sticky stages
     components.css   buttons, chips, hairline grid, marquee, video-trigger tiles
@@ -62,12 +63,16 @@ assets/
     venue-scene.js      the venue scene graph — coalescing truss/stage, beam shader, egress
     venue-palette.js    the phase colour ramp the venue walks through
     venue-splatter.js   logo-sampled scene cloud: form, disperse, reform, pointer response
+    anchor-bus.js       screen-space bridge from the WebGL mark to accessible DOM
+    work-bubbles.js     manifest-driven work links pinned to particle anchors
     hero-particles.js  the hero lockup's one-shot split-particle assembly
     hover-burst.js     the shared pointer-burst canvas layer
     warp.js             turbulence-displacement hover warp
     video-modal.js      the shared video-screening <dialog>
   img/                logo mark, wordmark, OG card, video posters
+  data/work.json      Selected Work content and links
   video/              the four client videos (see "Video" below)
+scripts/dev-server.py local no-cache preview server
 ```
 
 ## Logo
@@ -115,9 +120,12 @@ The design's `motionLevel` prop dials how far this ramp travels
 
 The large atmospheric cloud is built from roughly 3,300 samples of the real
 Applod starburst in `mark.png`. It begins overlaid with the hero, loosens into
-an Oxigen-inspired splatter as the venue process develops, reforms in later
-chapters, and repels around pointer movement. Its blend mode changes with the
-room so it remains graphic against both the pale hall and dark auditorium.
+an Oxigen-inspired splatter as the venue process develops, reforms around the
+Selected Work chapter, then gathers onto the LED wall for Showtime. Four
+accessible DOM bubbles are projected onto chosen points in the re-formed mark;
+hover, focus, or horizontal touch scrubbing reveals each project. The cloud
+repels around pointer movement and changes blend mode with the room so it stays
+graphic against both the pale hall and dark auditorium.
 
 Fine-pointer hover adds local distortion to work imagery through SVG turbulence
 and displacement, plus small pointer bursts on interactive elements. Reduced-
@@ -133,9 +141,9 @@ graphics and HUD-styled overlays, not raw B-roll):
 | File | Source | Used as |
 |---|---|---|
 | `reel.mp4` | `Applod_Company Reel.mp4` | Hero "Watch the Reel" |
-| `work-adidas.mp4` | Adidas Philippines — Fun Run & Office Opening 2026 | Work grid, wide tile |
-| `work-jamba.mp4` | Jamba — Cavite Branch Opening | Work grid, mid tile |
-| `work-sofa.mp4` | SoFA BLANC — Graduation Showcase | Work grid, tall tile |
+| `work-adidas.mp4` | Adidas Philippines — Fun Run & Office Opening 2026 | Reduced-motion work grid and modal |
+| `work-jamba.mp4` | Jamba — Cavite Branch Opening | Reduced-motion work grid and modal |
+| `work-sofa.mp4` | SoFA BLANC — Graduation Showcase | Reduced-motion work grid and modal |
 
 Each plays on demand in the shared `<dialog>` (`video-modal.js`) — nothing
 autoplays or preloads on page load. A genuine representative poster frame sits
@@ -189,6 +197,10 @@ computed value was checked against it.
   actually warping — an always-on `filter: url(...)` would force every one of
   these images onto its own filtered composited layer for the life of the
   page. Skipped entirely for coarse pointers and reduced-motion visitors.
+- **Particle-anchored work.** `venue-splatter.js` publishes projected anchor
+  positions through `anchor-bus.js`; `work-bubbles.js` places real links from
+  `assets/data/work.json` at those positions. Reduced-motion visitors retain
+  the complete video grid, and loading failure leaves that grid in place.
 - **SEO.** Title, description, canonical, Open Graph (with a real `og-card.jpg`
   and dimensions), Twitter card, favicon, and `Organization` JSON-LD.
 - **A production CSP.** `default-src 'self'` plus the two things actually
@@ -199,10 +211,9 @@ computed value was checked against it.
 1. **Canonical URL.** `https://applod.live/` remains the intended canonical URL
    in `index.html`. The first public release uses a Vercel-generated address;
    the custom domain should remain unchanged until visual approval.
-2. **`python3 -m http.server` doesn't support HTTP Range requests** — video
-   seeking will feel wrong under it (the whole file re-downloads on a seek).
-   Any real static host (Vercel, Netlify, S3 + CloudFront, nginx) supports
-   Range natively; this only matters for local preview.
+2. **Use `scripts/dev-server.py` locally.** It sends no-cache headers so saved
+   module changes appear on reload. Like Python's base static server, it does
+   not support HTTP Range requests, so verify video seeking on Vercel.
 3. **three.js is loaded from unpkg** (pinned to `0.150.1`, the version the
    design used). Vendoring it locally removes a third-party dependency from
    first paint; the r150 classic build also logs a deprecation warning, so

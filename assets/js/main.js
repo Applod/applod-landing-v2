@@ -15,6 +15,7 @@ import { initHeroParticles } from './hero-particles.js';
 import { initHoverBurst } from './hover-burst.js';
 import { initVideoModal } from './video-modal.js';
 import { initWarp } from './warp.js';
+import { initWorkBubbles } from './work-bubbles.js';
 
 import './venue.js';
 
@@ -48,6 +49,7 @@ function start() {
   boot('hover-burst', initHoverBurst);
   boot('video-modal', initVideoModal);
   boot('warp', initWarp);
+  boot('work-bubbles', initWorkBubbles);
 
   if (cursor) watchMotionPreferences(() => cursor.refresh());
 }

@@ -22,7 +22,10 @@
 
 .chapter--arrival { --track: 170vh; }
 .chapter--services { --track: 210vh; }
-.chapter--work { --track: 210vh; }
+/* Longer than its neighbours on purpose: the splatter has to re-form,
+   hold long enough to actually use the work bubbles, and only then
+   explode — three beats that don't fit in one screen of scrolling. */
+.chapter--work { --track: 280vh; }
 .chapter--about { --track: 210vh; }
 .chapter--clients { --track: 220vh; }
 .chapter--contact { --track: 240vh; }

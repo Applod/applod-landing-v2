@@ -30,6 +30,7 @@
 
 import { clamp01, lerp, range, smoothstep } from './math.js';
 import { isDarkAt } from './venue-palette.js';
+import { anchorBus } from './anchor-bus.js';
 
 const MARK_SRC = 'assets/img/mark.png';
 
@@ -41,18 +42,60 @@ const MAX_POINTS = 7000;
 
 /** World-space width the mark is scaled to at each of its two placements. */
 const ARRIVAL = { x: 0, y: 11, z: -12, width: 26 };
-const SHOWTIME = { x: 0, y: 13, z: -166, width: 34 };
+/** Selected Work: re-formed mid-room, close enough that the work bubbles
+ *  pinned to it land at a usable size on screen. */
+const WORK = { x: 0, y: 9, z: -78, width: 22 };
+/**
+ * Showtime: the mark playing on the LED wall itself, rather than floating near
+ * it. The wall is built at z = STAGE.z - STAGE.halfDepth = -182, spanning
+ * x -20..20 and y 2.4..22.4. This sits half a unit proud of that plane so the
+ * points never z-fight with the wall's own linework, and the width is chosen
+ * so the mark's 512:492 aspect leaves ~0.9 units of margin top and bottom.
+ */
+const SHOWTIME = { x: 0, y: 12.4, z: -181.5, width: 19 };
+
+/**
+ * How far the cloud's depth is squashed once it lands on the wall. An LED wall
+ * shows a flat image, so the volume that reads as a splat in mid-air has to
+ * collapse — that collapse is the moment the cloud becomes a screen.
+ */
+const LED_FLATTEN = 0.08;
+
+/** How many bubble anchors to sample and publish. Set by work-bubbles.js. */
+let anchorCount = 0;
+/** Local-space anchor points, picked once the cloud exists. */
+let anchorPoints = null;
+
+/**
+ * Ask the splatter to publish `n` well-spread anchor positions on the bus.
+ * Called by work-bubbles.js once it knows how many items the manifest holds.
+ * @param {number} n
+ */
+export function requestAnchors(n) {
+  anchorCount = Math.max(0, n | 0);
+  anchorPoints = null;
+}
 
 /** Shallow z-jitter, as a fraction of width — enough for volume, not a slab. */
 const DEPTH_FRACTION = 0.14;
 /** How far a dispersed point travels from its formed position, in world units. */
 const DISPERSE_RADIUS = 34;
 
-/** Scroll windows: formed on arrival, gone through the build, back for the show. */
+/**
+ * Scroll windows for the whole journey. These are tuned against the chapter
+ * boundaries produced by the track heights in stage.css — Selected Work spans
+ * roughly 0.31..0.54 — so the mark is whole exactly while that chapter is on
+ * screen, and blows apart only once it has passed.
+ *
+ * The windows never overlap, which is what lets `form` below be a simple sum
+ * of signed steps rather than a state machine.
+ */
 const CUE = {
-  leave: [0.08, 0.34],
-  arrive: [0.62, 0.84],
-  egress: [0.93, 1.0],
+  disperse: [0.08, 0.24],
+  reform: [0.27, 0.33],
+  explode: [0.46, 0.56],
+  gather: [0.72, 0.88],
+  egress: [0.95, 1.0],
 };
 
 /**
@@ -99,24 +142,35 @@ export function mountSplatter(T, scene) {
   const update = (p, t, mouse, intensity = 1, camera) => {
     if (!points || !material) return;
 
-    // Form -> disperse -> re-form. `leave` scatters the arrival mark as the
-    // build takes over the room; `arrive` pulls it back together on the stage.
-    const left = smoothstep(range(p, ...CUE.leave));
-    const back = smoothstep(range(p, ...CUE.arrive));
-    const egress = smoothstep(range(p, ...CUE.egress));
-    const form = clamp01(Math.max(1 - left, back) * (1 - egress));
-
-    // The travel down the room happens while the cloud is scattered, so the
-    // mark is never seen sliding — it dissolves at the door and condenses
-    // again at the stage.
-    const travel = smoothstep(range(p, CUE.leave[0], CUE.arrive[1]));
-    points.position.set(
-      lerp(ARRIVAL.x, SHOWTIME.x, travel),
-      lerp(ARRIVAL.y, SHOWTIME.y, travel),
-      lerp(ARRIVAL.z, SHOWTIME.z, travel),
+    // Whole -> apart -> whole -> apart -> whole -> gone. Because the windows
+    // don't overlap, each one contributes its own signed step and the sum is
+    // the form: 1 at arrival, 0 by the end of disperse, 1 again through
+    // Selected Work, 0 after the explosion, 1 on the wall, 0 on egress.
+    const form = clamp01(
+      1
+        - smoothstep(range(p, ...CUE.disperse))
+        + smoothstep(range(p, ...CUE.reform))
+        - smoothstep(range(p, ...CUE.explode))
+        + smoothstep(range(p, ...CUE.gather))
+        - smoothstep(range(p, ...CUE.egress)),
     );
-    const scale = lerp(1, SHOWTIME.width / ARRIVAL.width, travel);
-    points.scale.setScalar(scale);
+
+    // Two legs of travel, each one hidden inside a scatter so the mark is
+    // never seen sliding: door -> mid-room for Selected Work, then mid-room ->
+    // LED wall for the show.
+    const legWork = smoothstep(range(p, CUE.disperse[0], CUE.reform[1]));
+    const legWall = smoothstep(range(p, CUE.explode[0], CUE.gather[1]));
+    points.position.set(
+      lerp(lerp(ARRIVAL.x, WORK.x, legWork), SHOWTIME.x, legWall),
+      lerp(lerp(ARRIVAL.y, WORK.y, legWork), SHOWTIME.y, legWall),
+      lerp(lerp(ARRIVAL.z, WORK.z, legWork), SHOWTIME.z, legWall),
+    );
+
+    const width = lerp(lerp(ARRIVAL.width, WORK.width, legWork), SHOWTIME.width, legWall);
+    const scale = width / ARRIVAL.width;
+    // Squash depth as it lands: a cloud in the air, a flat image on the wall.
+    const flat = lerp(1, LED_FLATTEN, smoothstep(range(p, ...CUE.gather)));
+    points.scale.set(scale, scale, scale * flat);
 
     const u = material.uniforms;
     u.uTime.value = t;
@@ -156,9 +210,102 @@ export function mountSplatter(T, scene) {
       material.blending = wanted;
       material.needsUpdate = true;
     }
+
+    publishAnchors(T, points, camera, form, p);
   };
 
   return { update };
+}
+
+/**
+ * Pick `count` well-spread points from the mark, in the cloud's local space.
+ *
+ * Farthest-point sampling rather than random picks: the burst is far denser at
+ * its centre, so random sampling stacks every bubble in the middle of the logo
+ * instead of spreading them across its arms.
+ *
+ * @param {object} T
+ * @param {import('three').Points} points
+ * @param {number} count
+ */
+function pickAnchors(T, points, count) {
+  const attr = points.geometry.getAttribute('position');
+  const total = attr.count;
+  if (total === 0 || count <= 0) return [];
+
+  const chosen = [0];
+  const nearest = new Float64Array(total).fill(Infinity);
+
+  while (chosen.length < count && chosen.length < total) {
+    const last = chosen[chosen.length - 1];
+    const lx = attr.getX(last);
+    const ly = attr.getY(last);
+    let best = 0;
+    let bestDistance = -1;
+    for (let i = 0; i < total; i += 1) {
+      const dx = attr.getX(i) - lx;
+      const dy = attr.getY(i) - ly;
+      const d = dx * dx + dy * dy;
+      if (d < nearest[i]) nearest[i] = d;
+      if (nearest[i] > bestDistance) {
+        bestDistance = nearest[i];
+        best = i;
+      }
+    }
+    chosen.push(best);
+  }
+
+  // z = 0 keeps every bubble on the mark's own plane rather than scattered
+  // through its thickness, so they stay co-planar as the cloud flattens.
+  return chosen.map((i) => new T.Vector3(attr.getX(i), attr.getY(i), 0));
+}
+
+const projected = /* @__PURE__ */ (() => ({ v: null }))();
+
+/**
+ * Project the anchors to CSS pixels and publish them for the DOM bubbles.
+ * @param {object} T
+ * @param {import('three').Points} points
+ * @param {import('three').Camera} camera
+ * @param {number} form
+ * @param {number} p scroll progress
+ */
+function publishAnchors(T, points, camera, form, p) {
+  if (anchorCount === 0 || !camera) {
+    anchorBus.live = false;
+    return;
+  }
+  if (!anchorPoints || anchorPoints.length !== anchorCount) {
+    anchorPoints = pickAnchors(T, points, anchorCount);
+    anchorBus.anchors = anchorPoints.map(() => ({ x: 0, y: 0, scale: 1, onScreen: false }));
+  }
+  if (!projected.v) projected.v = new T.Vector3();
+
+  const halfW = innerWidth / 2;
+  const halfH = innerHeight / 2;
+  // Bail while the tab is hidden: innerWidth reports 0 and every bubble would
+  // be flung to the top-left corner.
+  if (halfW === 0 || halfH === 0) return;
+
+  points.updateMatrixWorld();
+  for (let i = 0; i < anchorPoints.length; i += 1) {
+    const out = anchorBus.anchors[i];
+    projected.v.copy(anchorPoints[i]).applyMatrix4(points.matrixWorld);
+    const depth = -projected.v.clone().applyMatrix4(camera.matrixWorldInverse).z;
+    projected.v.project(camera);
+    out.x = (projected.v.x + 1) * halfW;
+    out.y = (1 - projected.v.y) * halfH;
+    // Perspective size falloff, clamped so a bubble never collapses or blows up.
+    out.scale = Math.max(0.35, Math.min(1.6, 46 / Math.max(depth, 1)));
+    out.onScreen =
+      projected.v.z < 1 && out.x > -200 && out.x < innerWidth + 200 &&
+      out.y > -200 && out.y < innerHeight + 200;
+  }
+  anchorBus.form = form;
+  // Bounded by the same cues that re-form and then blow apart the mark, so the
+  // bubbles can never outlive the shape they are pinned to.
+  anchorBus.inWindow = p >= CUE.reform[0] && p <= CUE.explode[1];
+  anchorBus.live = true;
 }
 
 /** @returns {Promise<HTMLImageElement>} */
